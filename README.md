@@ -72,16 +72,23 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-
 ## How to setup
+
 Create a ormconfig.json.
-Refer to  [typerm Doc](https://docs.nestjs.com/techniques/database)
+Refer to [typerm Doc](https://docs.nestjs.com/techniques/database)
 
 ## Create a new migration with CMD
+
 npm run typeorm migration:generate -- -n migrationNameHere
 
 ## Run migration
+
 npm run typeorm migration:run
 
 ## Revert migration
+
 npm run typeorm migration:revert
+
+# Helpful links
+
+[Class Validator](https://github.com/typestack/class-validator)

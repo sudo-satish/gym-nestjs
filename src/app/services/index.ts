@@ -1,5 +1,4 @@
-import { UsersService } from "./users.service";
+import { OtpService } from './otp.service';
+import { UsersService } from './users.service';
 
-export default [
-  UsersService
-]
+export default [UsersService, OtpService];
