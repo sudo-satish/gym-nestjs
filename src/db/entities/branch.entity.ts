@@ -5,17 +5,20 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { Gym } from './gym.entity';
 
-@Entity('Otp')
-export class Otp {
+@Entity('Branches')
+export class Branch {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
-  otp: string;
+  name: string;
 
-  @OneToOne(() => User)
+  @Column()
+  location: string;
+
+  @OneToOne(() => Gym)
   @JoinColumn()
-  user: User;
+  gym: Gym;
 }

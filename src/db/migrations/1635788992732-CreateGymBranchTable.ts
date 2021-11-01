@@ -3,11 +3,10 @@ import {
   QueryRunner,
   Table,
   TableForeignKey,
-  TableIndex,
 } from 'typeorm';
 
-const tableName = 'Otp';
-export class CreateOTPTable1635692701157 implements MigrationInterface {
+const tableName = 'Branches';
+export class CreateGymBranchTable1635788992732 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -21,31 +20,28 @@ export class CreateOTPTable1635692701157 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'userId',
+            name: 'gymId',
             type: 'int',
           },
           {
-            name: 'otp',
+            name: 'name',
             type: 'varchar',
+          },
+          {
+            name: 'location',
+            type: 'varchar',
+            isNullable: true,
           },
         ],
       }),
     );
-
     await queryRunner.createForeignKey(
       tableName,
       new TableForeignKey({
-        columnNames: ['userId'],
+        columnNames: ['gymId'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'Users',
+        referencedTableName: 'Gyms',
         onDelete: 'CASCADE',
-      }),
-    );
-    await queryRunner.createIndex(
-      tableName,
-      new TableIndex({
-        name: 'IDX_USER_ID',
-        columnNames: ['userId'],
       }),
     );
   }

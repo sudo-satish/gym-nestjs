@@ -1,13 +1,8 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-  TableIndex,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
-const tableName = 'Otp';
-export class CreateOTPTable1635692701157 implements MigrationInterface {
+const tableName = 'Gyms';
+
+export class CreateGymTable1635786407645 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -21,31 +16,17 @@ export class CreateOTPTable1635692701157 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'userId',
-            type: 'int',
-          },
-          {
-            name: 'otp',
+            name: 'name',
             type: 'varchar',
           },
         ],
       }),
     );
-
-    await queryRunner.createForeignKey(
-      tableName,
-      new TableForeignKey({
-        columnNames: ['userId'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'Users',
-        onDelete: 'CASCADE',
-      }),
-    );
     await queryRunner.createIndex(
       tableName,
       new TableIndex({
-        name: 'IDX_USER_ID',
-        columnNames: ['userId'],
+        name: 'IDX_NAME',
+        columnNames: ['name'],
       }),
     );
   }

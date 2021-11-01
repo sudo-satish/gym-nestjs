@@ -79,7 +79,7 @@ Refer to [typerm Doc](https://docs.nestjs.com/techniques/database)
 
 ## Create a new migration with CMD
 
-npm run typeorm migration:generate -- -n migrationNameHere
+npm run typeorm migration:generate -- -n MigrationNameHere
 
 ## Run migration
 

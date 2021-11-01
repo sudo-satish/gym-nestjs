@@ -1,13 +1,15 @@
+import { USERS_ASSOCIATION_TO_GYM_BRANCH_TYPE } from 'src/contants';
 import {
   MigrationInterface,
   QueryRunner,
   Table,
   TableForeignKey,
-  TableIndex,
 } from 'typeorm';
 
-const tableName = 'Otp';
-export class CreateOTPTable1635692701157 implements MigrationInterface {
+const tableName = 'UsersAssociationToGymBranch';
+export class CreateUsersAssociationToGymBranchTable1635789159632
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -25,7 +27,14 @@ export class CreateOTPTable1635692701157 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'otp',
+            name: 'branchId',
+            type: 'int',
+          },
+          {
+            name: 'associationType',
+            enum: Reflect.ownKeys(
+              USERS_ASSOCIATION_TO_GYM_BRANCH_TYPE,
+            ) as string[],
             type: 'varchar',
           },
         ],
@@ -35,17 +44,19 @@ export class CreateOTPTable1635692701157 implements MigrationInterface {
     await queryRunner.createForeignKey(
       tableName,
       new TableForeignKey({
+        columnNames: ['branchId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'Branches',
+        onDelete: 'CASCADE',
+      }),
+    );
+    await queryRunner.createForeignKey(
+      tableName,
+      new TableForeignKey({
         columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'Users',
         onDelete: 'CASCADE',
-      }),
-    );
-    await queryRunner.createIndex(
-      tableName,
-      new TableIndex({
-        name: 'IDX_USER_ID',
-        columnNames: ['userId'],
       }),
     );
   }

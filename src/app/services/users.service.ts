@@ -12,16 +12,16 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersRepository.create(createUserDto);
+    return await this.usersRepository.save(
+      this.usersRepository.create(createUserDto),
+    );
   }
 
   async findOrCreate(userObj: { mobileNumber: string }): Promise<User> {
     try {
       return await this.findOneOrFail(userObj);
     } catch (error) {
-      return await this.usersRepository.save(
-        this.usersRepository.create(userObj),
-      );
+      return await this.usersRepository.create(userObj);
     }
   }
 

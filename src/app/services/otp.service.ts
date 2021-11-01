@@ -37,7 +37,7 @@ export class OtpService {
         throw new Error('Otp not matched!');
       }
     } else {
-      const otpModel = await this.otpRepository.findOneOrFail({ userId: user });
+      const otpModel = await this.otpRepository.findOneOrFail({ user });
       if (otpModel.otp === otp) {
         return true;
       } else {
