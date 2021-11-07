@@ -1,3 +1,4 @@
+import { AttendanceService } from './attendance.service';
 import { GymBranchesService } from './gymBranches.service';
 import { GymsService } from './gyms.service';
 import { OtpService } from './otp.service';
@@ -10,4 +11,5 @@ export default [
   GymsService,
   GymBranchesService,
   UserRolesService,
+  AttendanceService,
 ];

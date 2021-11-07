@@ -50,7 +50,7 @@ export class AuthController {
       const jwtToken = this.jwtService.sign(payload);
 
       return {
-        access_token: jwtToken,
+        accessToken: jwtToken,
         userRole,
         user,
       };

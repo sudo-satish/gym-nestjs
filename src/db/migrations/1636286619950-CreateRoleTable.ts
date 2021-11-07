@@ -4,7 +4,8 @@ import {
   Table,
   TableForeignKey,
 } from 'typeorm';
-import { USER_ROLES } from '../entities/userRole.entity';
+import { User } from '../entities/user.entity';
+import { UserRole, USER_ROLES } from '../entities/userRole.entity';
 
 const tableName = 'UserRoles';
 export class CreateRoleTable1636286619950 implements MigrationInterface {
@@ -82,6 +83,17 @@ export class CreateRoleTable1636286619950 implements MigrationInterface {
         onDelete: 'CASCADE',
       }),
     );
+
+    const user = new User();
+    user.mobileNumber = '8130626713';
+    user.firstName = 'Super';
+    user.lastName = 'Admin';
+    const userModel = await queryRunner.manager.save(user);
+    const userRole = new UserRole();
+    userRole.user = userModel;
+    userRole.role = USER_ROLES.SUPER_ADMIN;
+
+    await queryRunner.manager.save(userRole);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
