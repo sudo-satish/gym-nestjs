@@ -5,28 +5,36 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Branch } from './branch.entity';
 import { Gym } from './gym.entity';
 import { User } from './user.entity';
 
-export enum UserGymRole {
-  ADMIN = 'admin',
+export enum USER_ROLES {
+  SUPER_ADMIN = 'Super Admin',
+  GYM_ADMIN = 'Gym Admin',
+  GYM_MANAGER = 'Gym Manager',
+  GYM_MEMBER = 'Gym Member',
 }
 
-@Entity('UsersAssociationToGyms')
-export class UsersAssociationToGym {
+@Entity('UserRoles')
+export class UserRole {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column({
     type: 'enum',
-    enum: UserGymRole,
-    default: UserGymRole.ADMIN,
+    enum: USER_ROLES,
+    default: USER_ROLES.GYM_MEMBER,
   })
-  associationType: UserGymRole;
+  role: USER_ROLES;
 
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @OneToOne(() => Branch)
+  @JoinColumn()
+  branch: Branch;
 
   @OneToOne(() => Gym)
   @JoinColumn()

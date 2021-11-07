@@ -1,15 +1,13 @@
-import { USERS_ASSOCIATION_TO_GYMS_TYPE } from 'src/contants';
 import {
   MigrationInterface,
   QueryRunner,
   Table,
   TableForeignKey,
 } from 'typeorm';
+import { USER_ROLES } from '../entities/userRole.entity';
 
-const tableName = 'UsersAssociationToGyms';
-export class CreateUsersAssociationToGymTable1635788010488
-  implements MigrationInterface
-{
+const tableName = 'UserRoles';
+export class CreateRoleTable1636286619950 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -29,10 +27,16 @@ export class CreateUsersAssociationToGymTable1635788010488
           {
             name: 'gymId',
             type: 'int',
+            isNullable: true,
           },
           {
-            name: 'associationType',
-            enum: Reflect.ownKeys(USERS_ASSOCIATION_TO_GYMS_TYPE) as string[],
+            name: 'branchId',
+            type: 'int',
+            isNullable: true,
+          },
+          {
+            name: 'role',
+            enum: Reflect.ownKeys(USER_ROLES) as string[],
             type: 'varchar',
           },
         ],
@@ -54,6 +58,15 @@ export class CreateUsersAssociationToGymTable1635788010488
         columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'Users',
+        onDelete: 'CASCADE',
+      }),
+    );
+    await queryRunner.createForeignKey(
+      tableName,
+      new TableForeignKey({
+        columnNames: ['branchId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'Branches',
         onDelete: 'CASCADE',
       }),
     );

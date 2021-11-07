@@ -13,6 +13,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SendOtpDto, VerifyOtpDto } from 'src/dto/auth.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { OtpService } from '../services/otp.service';
+import { UserRolesService } from '../services/userRoles.service';
 import { UsersService } from '../services/users.service';
 @Controller('auth')
 export class AuthController {
@@ -20,6 +21,7 @@ export class AuthController {
     private otpService: OtpService,
     private usersService: UsersService,
     private jwtService: JwtService,
+    private roleService: UserRolesService,
   ) {}
 
   @Post('send-otp')
@@ -39,12 +41,18 @@ export class AuthController {
       });
 
       await this.otpService.verifyOtp(user, otp);
+      const userRole = await this.roleService.findOneOrFail(
+        { user },
+        { relations: ['branch', 'gym'] },
+      );
 
       const payload = { mobileNumber: user.mobileNumber, sub: user.id };
       const jwtToken = this.jwtService.sign(payload);
 
       return {
         access_token: jwtToken,
+        userRole,
+        user,
       };
     } catch (error) {
       console.log(error);

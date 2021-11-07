@@ -1,21 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
-import { UserGymBranchRole } from 'src/db/entities/usersAssociationToGymBranch.entity';
-import { UserGymRole } from 'src/db/entities/usersAssociationToGyms.entity';
+import { Body, Controller, Post } from '@nestjs/common';
+import { USER_ROLES } from 'src/db/entities/userRole.entity';
 import { CreateBranchDto, CreateGymDto } from 'src/dto/gym.dto';
 import { GymBranchesService } from '../services/gymBranches.service';
 import { GymsService } from '../services/gyms.service';
+import { UserRolesService } from '../services/userRoles.service';
 import { UsersService } from '../services/users.service';
-import { UsersAssociationToGymBranchesService } from '../services/usersAssociationToGymBranch.service';
-import { UsersAssociationToGymsService } from '../services/usersAssociationToGyms.service';
 
 @Controller('gyms')
 export class GymsController {
@@ -23,23 +12,22 @@ export class GymsController {
     private readonly gymsService: GymsService,
     private readonly branchesService: GymBranchesService,
     private readonly usersService: UsersService,
-    private readonly usersAssoctionToGymService: UsersAssociationToGymsService,
-    private readonly usersAssoctionToBranchService: UsersAssociationToGymBranchesService,
+    private readonly userRoleService: UserRolesService,
   ) {}
 
   @Post('create-with-admin')
   async create(@Body() { gym, admin }: CreateGymDto) {
     const gymModel = await this.gymsService.create(gym);
     const userModel = await this.usersService.create(admin);
-    const userAssociationToGym = await this.usersAssoctionToGymService.create({
+    const userRoleModel = await this.userRoleService.create({
       gym: gymModel,
+      role: USER_ROLES.GYM_ADMIN,
       user: userModel,
-      associationType: UserGymRole.ADMIN,
     });
     return {
       gymModel,
       userModel,
-      userAssociationToGym,
+      userRoleModel,
     };
   }
 
@@ -53,39 +41,17 @@ export class GymsController {
       gym,
     });
 
-    const userBranchAssociationModel =
-      await this.usersAssoctionToBranchService.create({
-        associationType: UserGymBranchRole.MANAGER,
-        branch: branchModel,
-        user: userModel,
-      });
+    const userRoleModel = await this.userRoleService.create({
+      role: USER_ROLES.GYM_MANAGER,
+      gym,
+      branch: branchModel,
+      user: userModel,
+    });
 
     return {
       userModel,
       branchModel,
-      userBranchAssociationModel,
+      userRoleModel,
     };
   }
-
-  // @Get()
-  // findAll(): Promise<User[]> {
-  //   return this.gymsService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string): Promise<Gym> {
-  //   return this.gymsService.gymRepository.findById(id);
-  // }
-
-  // @UseGuards(JwtAuthGuard)
-  // @Put(':id')
-  // async update(@Param('id') id: string, @Body() body): Promise<User> {
-  //   await this.gymsService.update(id, body);
-  //   return await this.gymsService.findOne(id);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string): Promise<void> {
-  //   return this.gymsService.remove(id);
-  // }
 }
