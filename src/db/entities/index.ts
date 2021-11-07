@@ -1,4 +1,4 @@
-import { Attendance } from './attendace.entity';
+import { Attendance } from './attendance.entity';
 import { Branch } from './branch.entity';
 import { Gym } from './gym.entity';
 import { Otp } from './otp.entity';

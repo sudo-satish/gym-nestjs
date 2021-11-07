@@ -16,6 +16,7 @@ export enum USER_ROLES {
   GYM_ADMIN = 'Gym Admin',
   GYM_MANAGER = 'Gym Manager',
   GYM_MEMBER = 'Gym Member',
+  GYM_TRAINER = 'Gym Trainer',
 }
 
 @Entity('UserRoles')

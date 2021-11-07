@@ -36,6 +36,19 @@ export class CreateBranchDto {
   @Type(() => GymBranchDto)
   branch: GymBranchDto;
 }
+export class CreateTrainerDto {
+  @IsNotEmpty({ message: 'Branch manager is required!' })
+  @ValidateNested()
+  @Type(() => GymAdminDto)
+  trainer: GymAdminDto;
+}
+
+export class CreateMemberDto {
+  @IsNotEmpty({ message: 'Branch manager is required!' })
+  @ValidateNested()
+  @Type(() => GymAdminDto)
+  member: GymAdminDto;
+}
 
 export class CreateGymDto {
   @ValidateNested()

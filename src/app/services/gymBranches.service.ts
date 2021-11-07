@@ -8,16 +8,16 @@ import { Repository } from 'typeorm';
 export class GymBranchesService {
   constructor(
     @InjectRepository(Branch)
-    public readonly gymRepository: Repository<Branch>,
+    public readonly repository: Repository<Branch>,
   ) {}
 
   async create(branch: BranchDto): Promise<Branch> {
-    console.log(this.gymRepository.create(branch));
+    console.log(this.repository.create(branch));
 
-    return await this.gymRepository.save(this.gymRepository.create(branch));
+    return await this.repository.save(this.repository.create(branch));
   }
 
-  async findOneOrFail(findQuery) {
-    return await this.gymRepository.findOneOrFail(findQuery);
+  async findOneOrFail(findQuery, options = {}) {
+    return await this.repository.findOneOrFail(findQuery, options);
   }
 }

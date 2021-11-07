@@ -1,6 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { USER_ROLES } from 'src/db/entities/userRole.entity';
-import { CreateBranchDto, CreateGymDto } from 'src/dto/gym.dto';
+import {
+  CreateBranchDto,
+  CreateGymDto,
+  CreateTrainerDto,
+} from 'src/dto/gym.dto';
 import { GymBranchesService } from '../services/gymBranches.service';
 import { GymsService } from '../services/gyms.service';
 import { UserRolesService } from '../services/userRoles.service';
@@ -53,5 +57,25 @@ export class GymsController {
       branchModel,
       userRoleModel,
     };
+  }
+
+  @Get('')
+  async fetchAllGyms() {
+    return this.gymsService.gymRepository.find({});
+  }
+
+  @Get('/:gymId/branches')
+  async fetchAllBranches(@Param('gymId') gymId) {
+    const gymModel = await this.gymsService.findOneOrFail(gymId);
+    return this.branchesService.repository.find({ where: { gym: gymModel } });
+  }
+
+  @Get('/:gymId/managers')
+  async fetchAllManagers(@Param('gymId') gymId) {
+    const gymModel = await this.gymsService.findOneOrFail(gymId);
+    return this.userRoleService.repository.find({
+      where: { gym: gymModel, role: USER_ROLES.GYM_MANAGER },
+      relations: ['user', 'branch'],
+    });
   }
 }

@@ -8,15 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Branch } from './branch.entity';
-import { Gym } from './gym.entity';
 import { User } from './user.entity';
-
-export enum USER_ROLES {
-  SUPER_ADMIN = 'Super Admin',
-  GYM_ADMIN = 'Gym Admin',
-  GYM_MANAGER = 'Gym Manager',
-  GYM_MEMBER = 'Gym Member',
-}
 
 @Entity('Attendance')
 export class Attendance {
