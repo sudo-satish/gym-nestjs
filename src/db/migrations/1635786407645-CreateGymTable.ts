@@ -19,6 +19,18 @@ export class CreateGymTable1635786407645 implements MigrationInterface {
             name: 'name',
             type: 'varchar',
           },
+          {
+            name: 'createdAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
         ],
       }),
     );

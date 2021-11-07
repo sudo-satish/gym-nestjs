@@ -1,5 +1,11 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('Users')
 export class User {
@@ -14,6 +20,12 @@ export class User {
 
   @Column()
   mobileNumber: string;
+
+  @CreateDateColumn({ default: () => 'now()' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ default: () => 'now()' })
+  updatedAt: Date;
 
   @Exclude()
   password: string;

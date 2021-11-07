@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Gym } from './gym.entity';
 
@@ -21,4 +23,10 @@ export class Branch {
   @OneToOne(() => Gym)
   @JoinColumn()
   gym: Gym;
+
+  @CreateDateColumn({ default: () => 'now()' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ default: () => 'now()' })
+  updatedAt: Date;
 }

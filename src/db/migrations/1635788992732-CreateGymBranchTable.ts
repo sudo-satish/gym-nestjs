@@ -32,6 +32,18 @@ export class CreateGymBranchTable1635788992732 implements MigrationInterface {
             type: 'varchar',
             isNullable: true,
           },
+          {
+            name: 'createdAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
         ],
       }),
     );

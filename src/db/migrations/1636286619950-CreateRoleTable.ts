@@ -39,6 +39,18 @@ export class CreateRoleTable1636286619950 implements MigrationInterface {
             enum: Reflect.ownKeys(USER_ROLES) as string[],
             type: 'varchar',
           },
+          {
+            name: 'createdAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
         ],
       }),
     );

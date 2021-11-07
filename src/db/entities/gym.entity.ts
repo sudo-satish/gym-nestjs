@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('Gyms')
 export class Gym {
@@ -7,4 +13,10 @@ export class Gym {
 
   @Column()
   name: string;
+
+  @CreateDateColumn({ default: () => 'now()' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ default: () => 'now()' })
+  updatedAt: Date;
 }

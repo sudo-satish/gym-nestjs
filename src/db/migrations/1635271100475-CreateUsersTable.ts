@@ -29,6 +29,18 @@ export class CreateUsersTable1635271100475 implements MigrationInterface {
             type: 'varchar',
             isUnique: true,
           },
+          {
+            name: 'createdAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: 'now()',
+          },
         ],
       }),
     );
