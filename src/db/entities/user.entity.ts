@@ -21,6 +21,9 @@ export class User {
   @Column()
   mobileNumber: string;
 
+  @Column()
+  profileImage: string;
+
   @CreateDateColumn({ default: () => 'now()' })
   createdAt: Date;
 

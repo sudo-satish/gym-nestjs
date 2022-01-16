@@ -41,8 +41,8 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
-  async update(id: string, body: User): Promise<UpdateResult> {
-    const user = await this.usersRepository.findOne(id);
+  async update(id: string, body: any): Promise<UpdateResult> {
+    // const user = await this.usersRepository.findOne(id);
     return await this.usersRepository.update(id, body);
   }
 }

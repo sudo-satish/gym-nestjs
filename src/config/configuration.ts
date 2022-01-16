@@ -13,4 +13,9 @@ export default () => ({
   jwt: {
     secret: process.env.JWT_KEY,
   },
+  cloudinary: {
+    cloudName: process.env.CLOUD_NAME,
+    apiKey: process.env.API_KEY,
+    apiSecret: process.env.API_SECRET,
+  },
 });
